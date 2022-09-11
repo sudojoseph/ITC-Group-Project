@@ -1,4 +1,5 @@
 var validator = require("validator");
+const mongoose = require("mongoose");
 
 const likedTrheadsSchema = new mongoose.Schema({});
 
@@ -36,4 +37,16 @@ const userSchema = new mongoose.Schema(
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = User;
+
+async function getUserByEmailModel(email) {
+  try {
+    const user = await User.findOne({ email });
+    console.log(user)
+    console.log('get user by email=========')
+    return user;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+module.exports = {User, getUserByEmailModel};
