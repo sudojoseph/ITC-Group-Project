@@ -1,6 +1,6 @@
 var validator = require("validator");
+const mongoose = require("mongoose");
 
-const likedTrheadsSchema =  mongoose.Schema({});
 
 const userSchema = new mongoose.Schema(
   {
@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter an email."],
       validate: validator.isEmail,
-      unique: true
+      unique: true,
     },
     password: {
       type: String,
@@ -27,7 +27,8 @@ const userSchema = new mongoose.Schema(
     },
     image: { type: String },
 
-    likedThreads: [likedTrheadsSchema],
+    likedThreads: [{ type: mongoose.Schema.ObjectId, ref: "Thread" }],
+    createdThreads: [{ type: mongoose.Schema.ObjectId, ref: "Thread" }],
   },
   {
     timestamps: true,

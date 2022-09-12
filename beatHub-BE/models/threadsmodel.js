@@ -1,9 +1,4 @@
-const userLikesSchema = mongoose.Schema({
-  _id: {
-    type: String,
-    required: true,
-  },
-});
+const mongoose = require("mongoose");
 
 const threadSchema = new mongoose.Schema(
   {
@@ -31,10 +26,21 @@ const threadSchema = new mongoose.Schema(
       required: [true, "Please choose an audio file.."],
     },
     threadOwner: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
     },
-    userLikes: [userLikesSchema],
+    userLikes: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+      },
+    ],
+    subThreads: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+      },
+    ],
   },
 
   {
