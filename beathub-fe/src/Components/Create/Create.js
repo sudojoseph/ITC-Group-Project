@@ -1,10 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { Flex } from '@chakra-ui/react';
+import AudioContainer from '../audioComponents/AudioContainer';
 
 function Create() {
   return (
-    <>
-    Create song Component
-    </>
+    <Flex minWidth='100vw' justify='center'>
+        <AudioContainer />
+    </Flex>
   )
 }
 
