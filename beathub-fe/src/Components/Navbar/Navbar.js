@@ -22,13 +22,13 @@ import Login from '../LogIn/Login'
 function Navbar() {
     return (
         <>
-            <Flex justify='space-between' align='center' fontSize='20px' border='2px' pt='2rem' pb='2rem'>
+            <Flex justify='space-between' align='center' fontSize='20px' pt='2rem' pb='2rem' backgroundColor='#A61C4F'>
                 
                 <Box ml='2rem'>
-                    <HStack border='2px'>
-                        <Link to='/'>MusicHub | </Link>
-                        <Link to='/explore'>Explore | </Link>
-                        <Link to='/about'>How It Works</Link>
+                    <HStack display='flex' w='150%' justify='space-around' fontSize='20px'>
+                        <Text fontSize='30px' mr='4rem' color='white'><Link to='/'>MusicHub</Link></Text>
+                        <Text color='white'><Link to='/explore'>Explore</Link></Text>
+                        <Text color='white'><Link to='/about'>How It Works</Link></Text>
                     </HStack>
                 </Box>
                 
@@ -37,7 +37,7 @@ function Navbar() {
                 </Box>
                 
                 <Menu>
-                    <MenuButton as={Button} colorScheme='pink' mr='4rem'>
+                    <MenuButton as={Button} backgroundColor='#F2F2F2' mr='4rem'>
                         Profile
                     </MenuButton>
                     <MenuList>
