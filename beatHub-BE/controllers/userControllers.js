@@ -4,13 +4,12 @@ const {User} = require('../models/usersmodel');
 
 async function addUserController(req, res) {
     try {
-      const { email, password, firstName, lastName, phone } = req.body;
+      const { email, password, firstName, lastName} = req.body;
       const newUser = {
         email,
         password,
         firstName,
         lastName,
-        phone
       };
       const addUserToDb = new User(newUser);
       addUserToDb.save();
