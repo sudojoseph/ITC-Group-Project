@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Recorder from './Recorder';
 import MediaPlayer from './MediaPlayer';
-import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Heading, Stack, Switch } from '@chakra-ui/react'
+import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Heading, Stack, Switch } from '@chakra-ui/react';
+import DragDrop from './DragDrop';
 
 function AudioContainer() {
     const [audioArr, setAudioArr] = useState([]);
@@ -19,7 +20,8 @@ function AudioContainer() {
             <Recorder audioArr={audioArr} setAudioArr={setAudioArr} recordingState={recordingState} setRecordingState={setRecordingState} />
           </TabPanel>
           <TabPanel>
-            <Heading align="center">Upload Track</Heading>
+            <Heading align="center" pb={13}>Upload Track</Heading>
+            <DragDrop />
           </TabPanel>
         </TabPanels>
       </Tabs>

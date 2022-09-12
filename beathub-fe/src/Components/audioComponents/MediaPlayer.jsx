@@ -10,4 +10,4 @@ function MediaPlayer({file}) {
   )
 }
 
-export default MediaPlayer
+export default MediaPlayer;
