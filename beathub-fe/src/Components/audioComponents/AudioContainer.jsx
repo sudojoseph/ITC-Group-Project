@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Recorder from './Recorder';
 import MediaPlayer from './MediaPlayer';
-import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Heading } from '@chakra-ui/react'
+import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Heading, Stack, Switch } from '@chakra-ui/react'
 
 function AudioContainer() {
     const [audioArr, setAudioArr] = useState([]);
@@ -23,8 +23,7 @@ function AudioContainer() {
           </TabPanel>
         </TabPanels>
       </Tabs>
-      
-      {audioArr?.map((file, index) => <><MediaPlayer file={file} /> <span>{`Version ${index + 1}`}</span></>)}
+        {audioArr?.map((audioObj, index) => <Stack align='center' direction='row'><MediaPlayer file={audioObj.element} /> <span>{`Version ${index + 1}`}</span><Switch size='sm' /></Stack>)}        
     </Box>
   )
 }

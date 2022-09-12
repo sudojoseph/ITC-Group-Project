@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import MicRecorder from 'mic-recorder-to-mp3';
-import MediaPlayer from './MediaPlayer';
-import { Button } from '@chakra-ui/react';
 import './recordButton.css';
 
  
 const recorder = new MicRecorder({
   bitRate: 128
 });
+
+
  
 function Recorder({setAudioArr, audioArr, recordingState, setRecordingState}) {
   
   const start = () => {
 
     if (audioArr.length) {
-      audioArr.forEach(file => file.play());
+      audioArr?.forEach(file => file.element.play());
     }
   
     recorder.start().then(() => {
@@ -27,22 +27,19 @@ function Recorder({setAudioArr, audioArr, recordingState, setRecordingState}) {
   }
 
 
-  const stop = () => {
+  const stop = async() => {
     recorder
     .stop()
     .getMp3().then(([buffer, blob]) => {
-      // do what ever you want with buffer and blob
-      // Creating MP3 file
       const file = new File(buffer, `recording${Math.random() * 1000000}.mp3`, {
         type: blob.type,
         lastModified: Date.now()
-      });
-  
+      });  
      
-      const player = new Audio(URL.createObjectURL(file));
-      setAudioArr([...audioArr, player]);
+      let player = new Audio(URL.createObjectURL(file));
+      
+      setAudioArr([...audioArr, {element: player, src: player.src, blob: blob}]);
 
-      console.log(player);
      
     }).catch((e) => {
       alert('We could not retrieve your message');
@@ -54,7 +51,7 @@ function Recorder({setAudioArr, audioArr, recordingState, setRecordingState}) {
   return (
     <div class='record-button-container'>
     <span class={`pulse-button ${!recordingState ? '' : 'recording'}`}
-      onClick={!recordingState ? start : stop}>{!recordingState ? 'Record' : 'stop'}</span>
+      onClick={!recordingState ? start : stop}>{!recordingState ? 'REC' : 'STOP'}</span>
   </div>
   )
 }
