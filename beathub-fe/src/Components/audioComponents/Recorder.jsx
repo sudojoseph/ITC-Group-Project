@@ -31,14 +31,16 @@ function Recorder({setAudioArr, audioArr, recordingState, setRecordingState}) {
     recorder
     .stop()
     .getMp3().then(([buffer, blob]) => {
+      console.log("🚀 ~ file: Recorder.jsx ~ line 34 ~ .getMp3 ~ buffer", buffer)
       const file = new File(buffer, `recording${Math.random() * 1000000}.mp3`, {
         type: blob.type,
         lastModified: Date.now()
       });  
+      console.log("🚀 ~ file: Recorder.jsx ~ line 38 ~ file ~ file", file)
      
       let player = new Audio(URL.createObjectURL(file));
       
-      setAudioArr([...audioArr, {element: player, src: player.src, blob: blob}]);
+      setAudioArr([...audioArr, {element: player, src: player.src, blob: URL.createObjectURL(file)}]);
 
      
     }).catch((e) => {
