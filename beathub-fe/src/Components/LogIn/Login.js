@@ -68,7 +68,7 @@ function Login() {
           </Flex>
           
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={handleLogIn}>
+            <Button backgroundColor='#A61C4F' color='#F2F2F2' _hover={{backgroundColor:'#F2F2F2', color:'#A61C4F'}} mr={3}  onClick={handleLogIn}>
               Enter
             </Button>
             <Button onClick={onClose}>Cancel</Button>

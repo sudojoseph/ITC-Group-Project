@@ -22,7 +22,7 @@ function App() {
     <UseContext.Provider value = {''}>
     <ChakraProvider theme={theme}>
     <BrowserRouter>
-      <Box textAlign="center" border='2px red'>
+      <Box textAlign="center">
         <Navbar />
       </Box>
       <Routes>
