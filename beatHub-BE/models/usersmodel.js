@@ -1,7 +1,7 @@
 var validator = require("validator");
 const mongoose = require("mongoose");
 
-const likedTrheadsSchema = new mongoose.Schema({});
+const likedTrheadsSchema =  mongoose.Schema({});
 
 const userSchema = new mongoose.Schema(
   {
@@ -19,12 +19,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter an email."],
       validate: validator.isEmail,
+      unique: true
     },
     password: {
       type: String,
       required: [true, "please enter a password"],
       minLength: [6, "a password must contain atleast 6 characters "],
-      maxLength: [14, "a password must contain less then 14 characters"]
     },
     image: { type: String },
 
