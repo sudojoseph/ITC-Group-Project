@@ -3,6 +3,7 @@ const { getUserByEmailModel } = require("../models/usersmodel");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+
 async function auth(req, res, next) {
     const { token } = req.cookies;
     jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
@@ -20,7 +21,7 @@ async function auth(req, res, next) {
 
 async function isExistingUser(req, res, next) {
     const user = await getUserByEmailModel(req.body.email);
-    console.log(user)
+    console.log("get email======== ",user)
     if (user) {
       req.body.user = user;
       next();
@@ -32,7 +33,7 @@ async function isExistingUser(req, res, next) {
 
 async function verifyPwd(req, res, next) {
     const { user } = req.body;
-  
+    console.log("verify pwd ====================", user)
     bcrypt.compare(req.body.password, user.password, (err, result) => {
       if (err) {
         const err = new Error(err);
