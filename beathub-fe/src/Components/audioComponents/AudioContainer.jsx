@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import DragDrop from './DragDrop';
 import Recorder from './Recorder';
 import MediaPlayer from './MediaPlayer';
+import React, { useState } from 'react';
 import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Heading, Stack, Switch } from '@chakra-ui/react';
-import { postThread } from '../../lib/apiFunctionality';
+import { postThread } from '../../lib/apiFunctionality';;
+
+
 
 function AudioContainer() {
     const [audioArr, setAudioArr] = useState([]);
@@ -19,7 +22,6 @@ function AudioContainer() {
         threadData.append(key, data[key]);
       }
       threadData.append('audioFile', audioArr[0].file);
-      console.log("🚀 ~ file: AudioContainer.jsx ~ line 22 ~ send ~ audioArr[0].src", audioArr[0].file)
       postThread(threadData);
 
     }
@@ -36,11 +38,12 @@ function AudioContainer() {
             <Recorder audioArr={audioArr} setAudioArr={setAudioArr} recordingState={recordingState} setRecordingState={setRecordingState} />
           </TabPanel>
           <TabPanel>
-            <Heading align="center">Upload Track</Heading>
+            <Heading align="center" pb={13}>Upload Track</Heading>
+            <DragDrop setAudioArr={setAudioArr} audioArr={audioArr} />
           </TabPanel>
         </TabPanels>
       </Tabs>
-        {audioArr?.map((audioObj, index) => <Stack align='center' direction='row'><MediaPlayer file={audioObj.element} /> <span>{`Version ${index + 1}`}</span><Switch size='sm' /></Stack>)}
+        {audioArr?.map((audioObj, index) => <Stack align='center' direction='row'><MediaPlayer src={audioObj.src} /> <span>{`Version ${index + 1}`}</span><Switch size='sm' /></Stack>)}
         <button onClick={send}>Send</button>        
     </Box>
     
