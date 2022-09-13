@@ -3,7 +3,7 @@ import { FileDrop } from 'react-file-drop';
 import { Text } from '@chakra-ui/react';
 import './DragDrop.css';
 
-function DragDrop() {
+function DragDrop({setAudioArr, audioArr}) {
   const fileInputRef = useRef(null);
 
   const onFileInputChange = (event) => {
@@ -15,8 +15,9 @@ function DragDrop() {
     fileInputRef.current.click()
   }
 
-  const fileHandler = (event) => {
-    alert(event);
+  const fileHandler = (file) => {
+    let player = new Audio(URL.createObjectURL(file[0]));
+    setAudioArr([...audioArr, {element: player, src: player.src, file: file[0]}]);
   }
 
   return (

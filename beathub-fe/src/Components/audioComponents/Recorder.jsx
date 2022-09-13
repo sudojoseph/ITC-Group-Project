@@ -44,7 +44,6 @@ function Recorder({setAudioArr, audioArr, recordingState, setRecordingState }) {
      
     }).catch((e) => {
       alert('We could not retrieve your message');
-      console.log(e);
     });
     setRecordingState(false);
   };

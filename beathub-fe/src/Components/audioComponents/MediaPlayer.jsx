@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 
-function MediaPlayer({file}) {
+function MediaPlayer({src}) {
   return (
     <ReactAudioPlayer
-    src={file.src}
+    src={src}
         controls
     />
   )
