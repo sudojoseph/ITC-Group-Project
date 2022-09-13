@@ -1,6 +1,6 @@
 var validator = require("validator");
+const mongoose = require("mongoose");
 
-const likedTrheadsSchema =  mongoose.Schema({});
 
 const userSchema = new mongoose.Schema(
   {
@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter an email."],
       validate: validator.isEmail,
-      unique: true
+      unique: true,
     },
     password: {
       type: String,
@@ -27,7 +27,8 @@ const userSchema = new mongoose.Schema(
     },
     image: { type: String },
 
-    likedThreads: [likedTrheadsSchema],
+    likedThreads: [{ type: mongoose.Schema.ObjectId, ref: "Thread" }],
+    createdThreads: [{ type: mongoose.Schema.ObjectId, ref: "Thread" }],
   },
   {
     timestamps: true,
@@ -36,4 +37,16 @@ const userSchema = new mongoose.Schema(
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = User;
+
+async function getUserByEmailModel(email) {
+  try {
+    const user = await User.findOne({ email });
+    console.log(user)
+    console.log('get user by email=========')
+    return user;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+module.exports = {User, getUserByEmailModel};
