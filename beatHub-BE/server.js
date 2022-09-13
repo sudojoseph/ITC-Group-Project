@@ -1,15 +1,22 @@
 const express = require("express");
 const cors = require("cors");
+const threadRoute = require("./routes/threadRoute")
 const PORT = process.env.PORT || 8070;
 const app = express();
 const mongoose = require("mongoose");
+const userRoutes = require("./routes/userRoutes");
+const cookieParser = require("cookie-parser");
 
 
 require("dotenv").config();
 
-app.use(cors());
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
+app.use("/thread", threadRoute);
+app.use(cookieParser());
+app.use("/thread", threadRoute);
 
+app.use("/users", userRoutes);
 
 mongoose
   .connect(process.env.MONGODB_URI)

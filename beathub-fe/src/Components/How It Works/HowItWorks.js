@@ -11,6 +11,7 @@ function HowItWorks() {
       <Box textAlign='center' pt='1rem' pb='1rem'>
         <Text fontSize='1.5rem'>Create, contribute and make music together!</Text>
       </Box>
+      
       <Box border='2px' textAlign='center'>
         <Text>Text 2</Text>
       </Box>
