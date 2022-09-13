@@ -28,6 +28,7 @@ const imageUrl = (req, res, next) => {
 
 
 const audioUrl = (req, res, next) => {
+    console.log("🚀 ~ file: fileMiddleware.js ~ line 31 ~ audioUrl ~ req", req.file)
     try {
       if (req.file) {
         const audioUrl = "http://localhost:8080/" + req.file.path;
@@ -44,9 +45,9 @@ const audioUrl = (req, res, next) => {
 
 
 const uploadImageToCloudinary = async (req, res, next) => {
-  if (!req.file) {
-    next();
-  } else {
+  // if (!req.file) {
+  //   // next();
+  // } else {
     cloudinary.uploader.upload(req.file.path, (err, result) => {
       if (err) {
         res.status(500).send("Could not upload Image to Cloudinary!");
@@ -60,7 +61,7 @@ const uploadImageToCloudinary = async (req, res, next) => {
         return;
       }
     });
-  }
+  // }
 };
 
 
@@ -68,7 +69,7 @@ const uploadAudioToCloudinary = async (req, res, next) => {
     if (!req.file) {
       next();
     } else {
-      cloudinary.uploader.upload(req.file.path, (err, result) => {
+      cloudinary.uploader.upload(req.file.path, {resource_type: "raw"}, (err, result) => {
         if (err) {
           res.status(500).send("Could not upload file to Cloudinary!");
           return;
