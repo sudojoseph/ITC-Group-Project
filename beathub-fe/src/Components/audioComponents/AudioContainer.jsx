@@ -18,8 +18,8 @@ function AudioContainer() {
       for (let key in data) {
         threadData.append(key, data[key]);
       }
-      threadData.append('audioFile', audioArr[0].src);
-      console.log("🚀 ~ file: AudioContainer.jsx ~ line 22 ~ send ~ audioArr[0].src", audioArr[0].src)
+      threadData.append('audioFile', audioArr[0].file);
+      console.log("🚀 ~ file: AudioContainer.jsx ~ line 22 ~ send ~ audioArr[0].src", audioArr[0].file)
       postThread(threadData);
 
     }
