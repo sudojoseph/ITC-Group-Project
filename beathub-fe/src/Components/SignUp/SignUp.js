@@ -28,7 +28,7 @@ function SignUp() {
           console.log(res.data);
           if (res) {
             // localStorage.setItem("token", JSON.stringify(res.data.token));
-            // navigate("/search");
+            console.log("signup responce", res);
           }
         } catch (err) {
           console.log(err);
