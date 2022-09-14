@@ -44,10 +44,6 @@ function SignUp() {
         }
       };
 
-
-
-
-
     return (
         <>
             <Box ml='30rem' mr='30rem' mt='1rem' border='2px' pt='2rem' pl='3rem' pr='3rem' pb='1.5rem'>

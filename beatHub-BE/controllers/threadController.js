@@ -1,10 +1,66 @@
 const User = require("../models/usersmodel");
 const Thread = require("../models/threadsmodel");
+const subThreadModel = require("../models/subThreadmodel");
+
+const getThreads = async (req, res) => {
+  const query = {};
+
+  if (req.query.genre) {
+    query.genre = req.query.genre;
+  }
+
+  if (req.query.title) {
+    query.title = req.query.title;
+  }
+
+  try {
+    const thread = await Thread.find({
+      query,
+    });
+
+    return res.status(200).send({ thread, results: thread.length });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+const addSubThread = async (req, res) => {
+  const { title, text, bpm, genre, audioFile } = req.body;
+  try {
+    const subThread = await subThread.create({
+      title,
+      text,
+      bpm,
+      genre,
+      audioFile,
+      parentThread: req.params.id,
+    });
+
+    const updatedMainThread = await Thread.findByIdAndUpdate(
+      req.params.id,
+      { subThreads: subThread._id },
+      {
+        new: true,
+      }
+    );
+    res.status(200).send({
+      subThread,
+      updatedMainThread,
+    });
+  } catch (err) {
+    res
+      .status(400)
+      .send(`there was a problem adding sub thread.: ${err.message}`);
+  }
+};
 
 
 const addThread = async (req, res) => {
   const { title, text, bpm, genre, audioFile } = req.body;
-  console.log("🚀 ~ file: threadController.js ~ line 6 ~ addThread ~ req.body", req.body)
+  console.log(
+    "🚀 ~ file: threadController.js ~ line 6 ~ addThread ~ req.body",
+    req.body
+  );
   try {
     const thread = await Thread.create({
       title,
@@ -15,7 +71,7 @@ const addThread = async (req, res) => {
       // threadOwner: req.user,
       // userLikes,
     });
-    
+
     const user = await User.findByIdAndUpdate(req.user, {
       createdThreads: thread._id,
     });
@@ -58,7 +114,9 @@ const editThread = async (req, res) => {
 
 const getThreadsByUserId = async (req, res) => {
   try {
-    const userThreads = await User.findById(req.params.id).populate({path: "createdThreads"});
+    const userThreads = await User.findById(req.params.id).populate({
+      path: "createdThreads",
+    });
 
     res.status(200).send(userThreads);
   } catch (err) {
@@ -69,4 +127,6 @@ const getThreadsByUserId = async (req, res) => {
 module.exports = {
   addThread,
   getThreadsByUserId,
+  getThreads,
+  addSubThread
 };

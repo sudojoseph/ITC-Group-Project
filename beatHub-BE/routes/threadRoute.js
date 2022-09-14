@@ -12,6 +12,9 @@ const { auth } = require("../middleware/userMiddleware");
 const router = express.Router();
 
 /// need to add auth
+
+router.post("/:id/subThread", threadController.addSubThread);
+
 router
   .route("/")
   .post(
@@ -19,7 +22,8 @@ router
     audioUrl,
     uploadAudioToCloudinary,
     threadController.addThread
-  );
+  )
+  .get(threadController.getThreads);
 
 router.get("/:userId", threadController.getThreadsByUserId);
 
