@@ -13,7 +13,7 @@ import {
     Flex,
     Box,
     Button,
-    Text
+    Text,
 } from '@chakra-ui/react'
 import Login from '../LogIn/Login'
 
@@ -26,32 +26,33 @@ function Navbar() {
                 
                 <Box ml='2rem'>
                     <HStack display='flex' w='150%' justify='space-around' fontSize='20px'>
-                        <Text fontSize='30px' mr='4rem' color='white'><Link to='/'>MusicHub</Link></Text>
+                        <Text fontSize='30px' mr='4rem' color='white'><Link to='/'>BeatHub</Link></Text>
                         <Text color='white'><Link to='/explore'>Explore</Link></Text>
                         <Text color='white'><Link to='/about'>How It Works</Link></Text>
                     </HStack>
                 </Box>
-                
-                <Box>
-                   <Login />
-                </Box>
-                
-                <Menu>
-                    <MenuButton as={Button} backgroundColor='#F2F2F2' mr='4rem'>
-                        Profile
-                    </MenuButton>
-                    <MenuList>
-                        <MenuGroup title='Profile'>
-                            <MenuItem><Link to='/myaccount'>My Account</Link></MenuItem>
-                            <MenuItem><Link to='/messages'>Messages</Link></MenuItem>
-                        </MenuGroup>
-                        <MenuDivider />
-                        <MenuGroup title='My Music'>
-                            <MenuItem><Link to='create'>Create Song</Link></MenuItem>
-                            <MenuItem><Link to='forked'>Forked Tracks</Link></MenuItem>
-                        </MenuGroup>
-                    </MenuList>
-                </Menu>
+                <HStack spacing='24px' pr='15px'>
+                    <Box>
+                    <Login />
+                    </Box>
+                    
+                    <Menu>
+                        <MenuButton as={Button} backgroundColor='#F2F2F2' mr='4rem'>
+                            Profile
+                        </MenuButton>
+                        <MenuList>
+                            <MenuGroup title='Profile'>
+                                <MenuItem><Link to='/myaccount'>My Account</Link></MenuItem>
+                                <MenuItem><Link to='/messages'>Messages</Link></MenuItem>
+                            </MenuGroup>
+                            <MenuDivider />
+                            <MenuGroup title='My Music'>
+                                <MenuItem><Link to='create'>Create Song</Link></MenuItem>
+                                <MenuItem><Link to='forked'>Forked Tracks</Link></MenuItem>
+                            </MenuGroup>
+                        </MenuList>
+                    </Menu>
+                </HStack>
 
             </Flex>
         </>

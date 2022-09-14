@@ -59,10 +59,9 @@ function AudioContainer() {
         </TabPanels>
       </Tabs>
       <Box pt={36}>
-        <AudioOutput audioArr={audioArr} toggleTrackIncludes={toggleTrackIncludes} checkToSave={checkToSave}/>    
+        {!audioArr.length ? '' : <AudioOutput audioArr={audioArr} toggleTrackIncludes={toggleTrackIncludes} checkToSave={checkToSave}/>}      
       </Box>
       <Flex justify={'center'} p={'15px'}>
-        {/* <Button onClick={send} color={'white'} backgroundColor={'#A61C4F'}>Submit Thread</Button>  */}
         {!audioArr.length ? '' : <SendAudioModal submitThread={submitThread} />}   
       </Flex>
     </Box>
