@@ -14,26 +14,15 @@ function Search() {
   }])
 
   useEffect(() => {
-    try{
+    try {
       const res = axios.get('http://localhost:8070/thread').then((res) => {
         console.log(res.data.thread)
         setSongsList(res.data.thread)
       })
-    } catch(error) {
-      console.error(error)}
-  }, [])
-
-  function forkTracks() {
-    try {
-      // THIS IS A WORKING IN PROGRESS YET (START)
-      const id = songs.map((song)=>{console.log(song._id)})
-      const thread = songs.find()
-      const resp = axios.post(`http://localhost:8070/thread/:id/subthread`, thread, { "Content-Type": "multipart/form-data" });
-      // THIS IS A WORKIN IN PROGRESS YET (END)
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  }
+  }, [])
 
 
   return (
@@ -61,19 +50,33 @@ function Search() {
         </Flex>
 
 
-        <Box display='flex' direction='column' mt='4rem' border='2px'>
+        <Box display='flex' direction='column' mt='4rem' >
           <List spacing={20} fontSize='1.5rem'>
             {songs.map((song) => {
               return (
                 <>
-                  <Flex align='center' p='2rem' direction='column'>
-                    <MediaPlayer src={song.audioFile} />
-                    <Text mt='2rem'>{`"${song.title}" BPM:${song.bpm}`}</Text>
+                  <Flex align='center' p='2rem' direction='column' boxShadow='base' rounded='md' bg='#121214' color='white' borderRadius='10px' >
+
+                    <Flex align='left' direction='column'>
+                      <MediaPlayer src={song.audioFile} />
+                      <Flex direction='column'>
+                        <Text mt='1rem' fontSize='15px' fontWeight='bold'>{`"${song.title}"`}</Text><Text mt='0.7rem' ml='15rem' fontSize='12px'>{`${song.bpm} BPM`}</Text>
+                      </Flex>
+                    </Flex>
+
                     <Flex justifyContent='space-around' mt='2rem'>
                       <Select variant='flushed' placeholder='Forks' size='sm' w='50%' mr='5rem'>
-                        <option>{song?.subThreads?.length}</option>
+                        <option style={{ backgroundColor: 'black' }}>{song?.subThreads?.length}</option>
                       </Select>
-                      <Button p='1.5rem' onClick={forkTracks}>Fork Track</Button>
+                      <Button backgroundColor='#6C75F5' color='white' _hover={{ backgroundColor: '#F2F2F2', color: '#6C75F5' }} p='1.2rem' fontSize='13px' onClick={() => {
+                        songs.map((item) => {
+                          if (song._id === item._id) {
+                            console.log('O item é', item)
+                            //const resp = axios.post(`http://localhost:8070/thread/${item._id}/subthread`, item).then((res) => {})
+                          }
+                        }
+                        )
+                      }}>Fork Track</Button>
                     </Flex>
                   </Flex>
                 </>

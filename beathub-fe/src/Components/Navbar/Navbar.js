@@ -25,17 +25,16 @@ function Navbar() {
             <Flex justify='space-between' align='center' fontSize='20px' pt='2rem' pb='2rem' backgroundColor='#A61C4F'>
                 
               
-                    <HStack display='flex' w='40%' justify='space-around' fontSize='20px' border='2px' ml='4rem'>
+                    <HStack display='flex' w='40%' justify='space-around' fontSize='20px' ml='4rem'>
                         <Text fontSize='30px' mr='4rem' color='white'><Link to='/'>BeatHub</Link></Text>
                         <Text color='white'><Link to='/explore'>Explore</Link></Text>
                         <Text color='white'><Link to='/about'>How It Works</Link></Text>
                     </HStack>
                 
-                
                 <Box>
                    <Login />
                    <Menu>
-                    <MenuButton as={Button} backgroundColor='#F2F2F2' mr='4rem'>
+                    <MenuButton as={Button} backgroundColor='#F2F2F2' mr='4rem' ml='2rem'>
                         Profile
                     </MenuButton>
                     <MenuList>
