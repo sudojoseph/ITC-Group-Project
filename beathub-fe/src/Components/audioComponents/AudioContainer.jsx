@@ -1,15 +1,16 @@
 import DragDrop from './DragDrop';
 import Recorder from './Recorder';
-import MediaPlayer from './MediaPlayer';
 import React, { useState } from 'react';
-import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Heading, Stack, Switch } from '@chakra-ui/react';
-import { postThread } from '../../lib/apiFunctionality';;
+import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Heading, Button, Flex } from '@chakra-ui/react';
+import { postThread } from '../../lib/apiFunctionality';
+import AudioOutput from './AudioOutput';
 
 
 
 function AudioContainer() {
     const [audioArr, setAudioArr] = useState([]);
     const [recordingState, setRecordingState] = useState(false);
+
     const send = () => {
       const data = {
         title: 'Joseph and Dan are sending data',
@@ -21,16 +22,36 @@ function AudioContainer() {
       for (let key in data) {
         threadData.append(key, data[key]);
       }
-      threadData.append('audioFile', audioArr[0].file);
+      let index = 0;
+      audioArr.every(obj => {
+        console.log(obj.toBeSaved);
+        if (obj.toBeSaved === true) {
+          return false;
+        }
+        index++;
+        return true;
+      });
+
+      threadData.append('audioFile', audioArr[index].file);
       postThread(threadData);
 
     }
+
+    const toggleTrackIncludes = (id) => {
+      alert(id);
+      setAudioArr([...audioArr.map((arrItem, index) => index === id ? {...arrItem, includeInRec: !arrItem.includeInRec} : arrItem = arrItem)]);
+    };
+
+    const checkToSave = (id) => {
+      setAudioArr([...audioArr.map((arrItem, index) => index === id ? {...arrItem, toBeSaved: true} : {...arrItem, toBeSaved: false})]);
+    }
+
   return (
-    <Box borderWidth='1px' borderRadius='lg' w="400px" height={'500px'} mt={'50px'}>
+    <Box borderWidth='1px' borderRadius='lg' w="600px" minH={'500px'} mt={'50px'} mb={'50px'}>
       <Tabs isFitted variant='enclosed'>
         <TabList mb='1em'>
-          <Tab>Record Track</Tab>
-          <Tab>Upload Track</Tab>
+          <Tab><b>Record Track</b></Tab>
+          <Tab><b>Upload Track</b></Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -43,8 +64,12 @@ function AudioContainer() {
           </TabPanel>
         </TabPanels>
       </Tabs>
-        {audioArr?.map((audioObj, index) => <Stack align='center' direction='row'><MediaPlayer src={audioObj.src} /> <span>{`Version ${index + 1}`}</span><Switch size='sm' /></Stack>)}
-        <button onClick={send}>Send</button>        
+      <Box pt={36}>
+        <AudioOutput audioArr={audioArr} toggleTrackIncludes={toggleTrackIncludes} checkToSave={checkToSave}/>    
+      </Box>
+      <Flex justify={'center'} p={'15px'}>
+        <Button onClick={send} color={'white'} backgroundColor={'#A61C4F'}>Submit Thread</Button>    
+      </Flex>
     </Box>
     
   )
