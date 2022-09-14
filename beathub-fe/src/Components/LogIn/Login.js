@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,ModalCloseButton,
   useDisclosure, Button, FormControl,FormLabel,Input, Text, LinkBox, Flex} from '@chakra-ui/react'
 import {Link} from 'react-router-dom'
@@ -36,10 +36,28 @@ function Login() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      const res = await axios.get('http://localhost:8070/users/logout', { withCredentials: true });
+      if (res.data.ok) {
+        localStorage.removeItem("user");
+
+        setCurrentUser(null);  
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setCurrentUser(user);
+    }
+  }, []);
 
   return (
-    <>
-      <Button onClick={onOpen}>Login</Button>
+    <>{currentUser ? <Button onClick={handleLogout}>Logout</Button> :<Button onClick={onOpen}>Login</Button>}
+
 
       <Modal
         initialFocusRef={initialRef}
