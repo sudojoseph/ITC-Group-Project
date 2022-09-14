@@ -35,7 +35,7 @@ function Recorder({setAudioArr, audioArr, recordingState, setRecordingState }) {
       const file = new File(buffer, `recording${Math.random() * 1000000}.mp3`, {
         type: 'audio/mp3',
         lastModified: Date.now()
-      });
+      });  
      
       let player = new Audio(URL.createObjectURL(file));
       
@@ -44,7 +44,6 @@ function Recorder({setAudioArr, audioArr, recordingState, setRecordingState }) {
      
     }).catch((e) => {
       alert('We could not retrieve your message');
-      console.log(e);
     });
     setRecordingState(false);
   };

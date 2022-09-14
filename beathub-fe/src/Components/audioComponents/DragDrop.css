@@ -1,0 +1,27 @@
+.file-drag-drop {
+    border: 3px dashed black;
+    border-radius: 6px;
+    height: 150px;
+    text-align: center;
+    position: relative;
+}
+
+.file-drop-target {
+    height: 144px;
+}
+
+.highlight {
+    background-color: none;
+    border: none;
+    color: #a61c4f;
+    line-height: 132px;
+}
+
+.file-drop {
+    opacity: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    position: absolute;
+}
