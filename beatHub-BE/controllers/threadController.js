@@ -1,5 +1,6 @@
 const User = require("../models/usersmodel");
 const Thread = require("../models/threadsmodel");
+const subThreadModel = require("../models/subThreadmodel");
 
 const getThreads = async (req, res) => {
   const query = {};
@@ -23,9 +24,42 @@ const getThreads = async (req, res) => {
   }
 };
 
+const addSubThread = async (req, res) => {
+  const { title, text, bpm, genre, audioFile } = req.body;
+  try {
+    const subThread = await subThread.create({
+      title,
+      text,
+      bpm,
+      genre,
+      audioFile,
+      parentThread: req.params.id,
+    });
+
+    const updatedMainThread = await Thread.findByIdAndUpdate(
+      req.params.id,
+      { subThreads: subThread._id },
+      {
+        new: true,
+      }
+    );
+    res.status(200).send({
+      subThread,
+      updatedMainThread,
+    });
+  } catch (err) {
+    res
+      .status(400)
+      .send(`there was a problem adding sub thread.: ${err.message}`);
+  }
+};
+
 const addThread = async (req, res) => {
   const { title, text, bpm, genre, audioFile } = req.body;
-  console.log("🚀 ~ file: threadController.js ~ line 6 ~ addThread ~ req.body", req.body)
+  console.log(
+    "🚀 ~ file: threadController.js ~ line 6 ~ addThread ~ req.body",
+    req.body
+  );
   try {
     const thread = await Thread.create({
       title,
@@ -36,7 +70,7 @@ const addThread = async (req, res) => {
       // threadOwner: req.user,
       // userLikes,
     });
-    
+
     const user = await User.findByIdAndUpdate(req.user, {
       createdThreads: thread._id,
     });
@@ -93,4 +127,5 @@ module.exports = {
   addThread,
   getThreadsByUserId,
   getThreads,
+  addSubThread
 };
