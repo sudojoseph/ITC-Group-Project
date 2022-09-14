@@ -25,6 +25,7 @@ const getThreads = async (req, res) => {
 
 const addThread = async (req, res) => {
   const { title, text, bpm, genre, audioFile } = req.body;
+  console.log("🚀 ~ file: threadController.js ~ line 6 ~ addThread ~ req.body", req.body)
   try {
     const thread = await Thread.create({
       title,
@@ -35,7 +36,7 @@ const addThread = async (req, res) => {
       // threadOwner: req.user,
       // userLikes,
     });
-
+    
     const user = await User.findByIdAndUpdate(req.user, {
       createdThreads: thread._id,
     });
@@ -46,7 +47,7 @@ const addThread = async (req, res) => {
       message: `your thread is succsesfully added.`,
     });
   } catch (err) {
-    res.status(400).send("there was a problem adding thread.");
+    res.status(400).send(`there was a problem adding thread.: ${err.message}`);
   }
 };
 

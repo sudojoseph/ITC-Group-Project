@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MicRecorder from 'mic-recorder-to-mp3';
+import { useReactMediaRecorder } from "react-media-recorder";
 import './recordButton.css';
 
  
@@ -9,12 +10,12 @@ const recorder = new MicRecorder({
 
 
  
-function Recorder({setAudioArr, audioArr, recordingState, setRecordingState}) {
+function Recorder({setAudioArr, audioArr, recordingState, setRecordingState }) {
   
   const start = () => {
 
     if (audioArr.length) {
-      audioArr?.forEach(file => file.element.play());
+      audioArr?.forEach(file => !file.includeInRec ? 0 : file.element.play());
     }
   
     recorder.start().then(() => {
@@ -27,26 +28,27 @@ function Recorder({setAudioArr, audioArr, recordingState, setRecordingState}) {
   }
 
 
-  const stop = async() => {
+  const stop = () => {
     recorder
     .stop()
     .getMp3().then(([buffer, blob]) => {
       const file = new File(buffer, `recording${Math.random() * 1000000}.mp3`, {
-        type: blob.type,
+        type: 'audio/mp3',
         lastModified: Date.now()
       });  
      
       let player = new Audio(URL.createObjectURL(file));
       
-      setAudioArr([...audioArr, {element: player, src: player.src, blob: blob}]);
+      setAudioArr([...audioArr, {element: player, src: player.src, file: file, includeInRec: true, toBeSaved: false}]);
 
      
     }).catch((e) => {
       alert('We could not retrieve your message');
-      console.log(e);
     });
     setRecordingState(false);
   };
+
+  
 
   return (
     <div class='record-button-container'>
