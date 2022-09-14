@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import MediaPlayer from '../audioComponents/MediaPlayer'
 import { Box, Flex, Button, Input, InputGroup, InputRightElement, Select, Text, List, ListItem, ListIcon, OrderedList, UnorderedList } from '@chakra-ui/react'
+import axios from 'axios'
 
 function Search() {
 
@@ -12,36 +14,26 @@ function Search() {
   }])
 
   useEffect(() => {
-    const mockSongs = [
-      {
-        title: 'I Wanna Hold Your Hand',
-        genre: 'Rock',
-        length: 95,
-        creator: 'Lennon/McCartney',
-        creator_id: 1
-      },
-
-      {
-        title: 'Hit Me Baby One More Time',
-        genre: 'Pop',
-        length: 125,
-        creator: 'Britney Spears',
-        creator_id: 2
-      },
-
-      {
-        title: 'Hava Nagila',
-        genre: 'Regional',
-        length: 7521,
-        creator: 'Tzvi Ben Yaakov',
-        creator_id: 3
-      }
-    ]
-
-    setSongsList(mockSongs)
+    try{
+      const res = axios.get('http://localhost:8070/thread').then((res) => {
+        console.log(res.data.thread)
+        setSongsList(res.data.thread)
+      })
+    } catch(error) {
+      console.error(error)}
   }, [])
 
-
+  function forkTracks() {
+    try {
+      // THIS IS A WORKING IN PROGRESS YET (START)
+      const id = songs.map((song)=>{console.log(song._id)})
+      const thread = songs.find()
+      const resp = axios.post(`http://localhost:8070/thread/:id/subthread`, thread, { "Content-Type": "multipart/form-data" });
+      // THIS IS A WORKIN IN PROGRESS YET (END)
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
 
   return (
@@ -66,22 +58,25 @@ function Search() {
             <option value='edm'>EDM</option>
             <option value='regional'>Regional</option>
           </Select>
-          <Select variant='flushed' placeholder='Length' w='100%' size='sm'>
-            <option value='short'>0 - 30s</option>
-            <option value='medium'>30s - 2min</option>
-            <option value='long'>2min --</option>
-          </Select>
         </Flex>
 
-        <Box display='flex' direction='column' mt='4rem'>
-          <List spacing={10} fontSize='1.5rem'>
+
+        <Box display='flex' direction='column' mt='4rem' border='2px'>
+          <List spacing={20} fontSize='1.5rem'>
             {songs.map((song) => {
               return (
-                <div>
-                  <ListItem borderBottom='2px'>
-                  (PLAYER BUTTON HERE) {song.title} by {song.creator} - {song.length} minutes
-                  </ListItem>
-                </div>
+                <>
+                  <Flex align='center' p='2rem' direction='column'>
+                    <MediaPlayer src={song.audioFile} />
+                    <Text mt='2rem'>{`"${song.title}" BPM:${song.bpm}`}</Text>
+                    <Flex justifyContent='space-around' mt='2rem'>
+                      <Select variant='flushed' placeholder='Forks' size='sm' w='50%' mr='5rem'>
+                        <option>{song?.subThreads?.length}</option>
+                      </Select>
+                      <Button p='1.5rem' onClick={forkTracks}>Fork Track</Button>
+                    </Flex>
+                  </Flex>
+                </>
               )
             })}
           </List>
