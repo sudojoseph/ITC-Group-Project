@@ -16,9 +16,11 @@ import {
     AlertDialogContent,
     AlertDialogOverlay,
 } from '@chakra-ui/react'
+import { useNavigate } from "react-router-dom";
 
 
 function SignUp() {
+    let navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({});
     const handleTextChange = (e) => {
         setUserInfo({ ...userInfo, [e.target.id]: e.target.value });
@@ -33,8 +35,9 @@ function SignUp() {
           );
           console.log(res.data);
           if (res) {
-            // localStorage.setItem("token", JSON.stringify(res.data.token));
+
             console.log("signup responce", res);
+              navigate("/");
           }
         } catch (err) {
           console.log(err);

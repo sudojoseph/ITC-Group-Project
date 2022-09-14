@@ -3,13 +3,14 @@ import {Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,ModalC
   useDisclosure, Button, FormControl,FormLabel,Input, Text, LinkBox, Flex} from '@chakra-ui/react'
 import {Link} from 'react-router-dom'
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({setProfileUser}) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [currentUser, setCurrentUser] = useState("");
-
+  let navigate = useNavigate();
   const initialRef = React.useRef (null)
   const finalRef = React.useRef(null)
 
@@ -23,6 +24,8 @@ function Login() {
         localStorage.setItem('user', JSON.stringify(res.data.user))
 
         setCurrentUser(res.data.user)
+        setProfileUser(res.data.user)
+        onClose()
         console.log(res.data)
         console.log(currentUser)
 
@@ -41,8 +44,9 @@ function Login() {
       const res = await axios.get('http://localhost:8070/users/logout', { withCredentials: true });
       if (res.data.ok) {
         localStorage.removeItem("user");
-
         setCurrentUser(null);  
+        setProfileUser(null);
+        navigate("/");
       }
     } catch (err) {
       console.log(err);
@@ -52,6 +56,7 @@ function Login() {
     const user = localStorage.getItem("user");
     if (user) {
       setCurrentUser(user);
+      setProfileUser(user);
     }
   }, []);
 

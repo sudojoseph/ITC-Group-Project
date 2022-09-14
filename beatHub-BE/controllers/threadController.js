@@ -1,6 +1,7 @@
 const User = require("../models/usersmodel");
 const Thread = require("../models/threadsmodel");
 
+
 const addThread = async (req, res) => {
   const { title, text, bpm, genre, audioFile } = req.body;
   console.log("🚀 ~ file: threadController.js ~ line 6 ~ addThread ~ req.body", req.body)

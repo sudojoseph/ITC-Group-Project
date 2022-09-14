@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
 import {
     Menu,
@@ -20,6 +20,19 @@ import Login from '../LogIn/Login'
 
 
 function Navbar() {
+    const [profileUser, setProfileUser] = useState("");
+    const user = localStorage.getItem("user");
+    useEffect(() => {
+
+        if (user) {
+            setProfileUser(user);
+        }
+      }, []);
+      useEffect(() => {
+        if(user===null){
+            setProfileUser(null)
+      }}, [profileUser]);
+    
     return (
         <>
             <Flex justify='space-between' align='center' fontSize='20px' pt='2rem' pb='2rem' backgroundColor='#A61C4F'>
@@ -33,13 +46,14 @@ function Navbar() {
                 </Box>
                 
                 <Box>
-                   <Login />
+                   <Login setProfileUser={setProfileUser}/>
                 </Box>
                 
                 <Menu>
-                    <MenuButton as={Button} backgroundColor='#F2F2F2' mr='4rem'>
+                    {profileUser ? <MenuButton as={Button} backgroundColor='#F2F2F2' mr='4rem'>
                         Profile
-                    </MenuButton>
+                    </MenuButton> : null}
+                    
                     <MenuList>
                         <MenuGroup title='Profile'>
                             <MenuItem><Link to='/myaccount'>My Account</Link></MenuItem>
