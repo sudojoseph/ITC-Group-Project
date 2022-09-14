@@ -11,10 +11,16 @@ import {NumberInput,
     Flex
 } from '@chakra-ui/react'
 
-function BPMSlider() {
+function BPMSlider({changeHandler}) {
     
         const [value, setValue] = React.useState(0)
-        const handleChange = (value) => setValue(value)
+        const handleChange = (value) => {
+            const e = {target: {}};
+            e.target.value = value;
+            e.target.name = 'bpm';
+            changeHandler(e);
+            setValue(value);
+        }
 
         return (
             <Flex>
@@ -23,6 +29,7 @@ function BPMSlider() {
                     max={200}
                     focusThumbOnChange={false}
                     value={value}
+                    name='bpm'
                     onChange={handleChange}
                 >
                     <SliderTrack>
