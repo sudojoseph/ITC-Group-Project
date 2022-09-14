@@ -1,6 +1,28 @@
 const User = require("../models/usersmodel");
 const Thread = require("../models/threadsmodel");
 
+const getThreads = async (req, res) => {
+  const query = {};
+
+  if (req.query.genre) {
+    query.genre = req.query.genre;
+  }
+
+  if (req.query.title) {
+    query.title = req.query.title;
+  }
+
+  try {
+    const thread = await Thread.find({
+      query,
+    });
+
+    return res.status(200).send({ thread, results: thread.length });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 const addThread = async (req, res) => {
   const { title, text, bpm, genre, audioFile } = req.body;
   console.log("🚀 ~ file: threadController.js ~ line 6 ~ addThread ~ req.body", req.body)
@@ -57,7 +79,9 @@ const editThread = async (req, res) => {
 
 const getThreadsByUserId = async (req, res) => {
   try {
-    const userThreads = await User.findById(req.params.id).populate({path: "createdThreads"});
+    const userThreads = await User.findById(req.params.id).populate({
+      path: "createdThreads",
+    });
 
     res.status(200).send(userThreads);
   } catch (err) {
@@ -68,4 +92,5 @@ const getThreadsByUserId = async (req, res) => {
 module.exports = {
   addThread,
   getThreadsByUserId,
+  getThreads,
 };

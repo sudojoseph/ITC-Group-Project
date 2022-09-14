@@ -17,7 +17,7 @@ function DragDrop({setAudioArr, audioArr}) {
 
   const fileHandler = (file) => {
     let player = new Audio(URL.createObjectURL(file[0]));
-    setAudioArr([...audioArr, {element: player, src: player.src, file: file[0]}]);
+    setAudioArr([...audioArr, {element: player, src: player.src, file: file[0], includeInRec: true}]);
   }
 
   return (

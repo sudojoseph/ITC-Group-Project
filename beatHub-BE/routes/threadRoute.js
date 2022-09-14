@@ -9,6 +9,9 @@ const {
 const router = express.Router();
 
 /// need to add auth
+
+
+
 router
   .route("/")
   .post(
@@ -16,7 +19,7 @@ router
     audioUrl,
     uploadAudioToCloudinary,
     threadController.addThread
-  );
+  ).get(threadController.getThreads)
 
 router.get("/:userId", threadController.getThreadsByUserId);
 
