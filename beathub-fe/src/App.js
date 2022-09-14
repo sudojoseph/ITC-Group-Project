@@ -12,6 +12,7 @@ import MyAccount from './Components/MyAccount/MyAccount';
 import Messages from './Components/Messages/Messages';
 import Create from './Components/Create/Create';
 import Forked from './Components/Forked/Forked';
+import SendAudioModal from './Components/Create/SendAudioModal';
 
 
 export const UseContext = React.createContext()
@@ -30,6 +31,7 @@ function App() {
           <Route path='/myaccount' element={ <MyAccount/> }></Route>
           <Route path='/messages' element={ <Messages/> }></Route>
           <Route path='/create' element={ <Create/> }></Route>
+          <Route path='/create/sendaudio' element={ <SendAudioModal/> }></Route>
           <Route path='/forked' element={ <Forked/> }></Route>
           <Route path='/explore' element={ <Explore/> }></Route>
           <Route path='/about' element={ <HowItWorks/> }></Route>

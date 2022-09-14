@@ -3,6 +3,7 @@ import Recorder from './Recorder';
 import React, { useState } from 'react';
 import { Box, Tabs, TabList, Tab, TabPanels, TabPanel, Heading, Button, Flex } from '@chakra-ui/react';
 import { postThread } from '../../lib/apiFunctionality';
+import SendAudioModal from '../Create/SendAudioModal';
 import AudioOutput from './AudioOutput';
 
 
@@ -11,20 +12,13 @@ function AudioContainer() {
     const [audioArr, setAudioArr] = useState([]);
     const [recordingState, setRecordingState] = useState(false);
 
-    const send = () => {
-      const data = {
-        title: 'Joseph and Dan are sending data',
-        genre: 'Rock',
-        bpm: 128,
-        text: 'Some more text, you"re not tired yet'
-      }
+    const submitThread = (data) => {
       const threadData = new FormData();
       for (let key in data) {
         threadData.append(key, data[key]);
       }
       let index = 0;
       audioArr.every(obj => {
-        console.log(obj.toBeSaved);
         if (obj.toBeSaved === true) {
           return false;
         }
@@ -65,10 +59,10 @@ function AudioContainer() {
         </TabPanels>
       </Tabs>
       <Box pt={36}>
-        <AudioOutput audioArr={audioArr} toggleTrackIncludes={toggleTrackIncludes} checkToSave={checkToSave}/>    
+        {!audioArr.length ? '' : <AudioOutput audioArr={audioArr} toggleTrackIncludes={toggleTrackIncludes} checkToSave={checkToSave}/>}      
       </Box>
       <Flex justify={'center'} p={'15px'}>
-        <Button onClick={send} color={'white'} backgroundColor={'#A61C4F'}>Submit Thread</Button>    
+        {!audioArr.length ? '' : <SendAudioModal submitThread={submitThread} />}   
       </Flex>
     </Box>
     
