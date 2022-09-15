@@ -1,6 +1,6 @@
 const User = require("../models/usersmodel");
 const Thread = require("../models/threadsmodel");
-const subThreadModel = require("../models/subThreadmodel");
+// const subThreadModel = require("../models/subThreadmodel");
 
 const getThreads = async (req, res) => {
   const query = {};
