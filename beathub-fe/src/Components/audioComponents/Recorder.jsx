@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import MicRecorder from 'mic-recorder-to-mp3';
-import { useReactMediaRecorder } from "react-media-recorder";
 import './recordButton.css';
 
  
