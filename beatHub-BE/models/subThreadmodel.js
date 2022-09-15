@@ -40,4 +40,4 @@ const subThreadSchema = new mongoose.Schema(
 
 const subThread = mongoose.model("subThread", subThreadSchema);
 
-module.exports = Thread;
+module.exports = subThread;
