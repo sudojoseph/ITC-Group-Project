@@ -31,11 +31,12 @@ function SendAudioModal({submitThread}) {
 
     const submitAll = () => {
         submitThread(formInfo);
+        onClose();
     }
 
     return (
         <>
-            <Button color={'white'} backgroundColor={'#A61C4F'} onClick={onOpen}>Submit Thread</Button>
+            <Button color={'white'} backgroundColor={'#A61C4F'} onClick={onOpen}>Submit Threada</Button>
 
             <Modal
                 initialFocusRef={initialRef}

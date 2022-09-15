@@ -32,7 +32,6 @@ function AudioContainer() {
     }
 
     const toggleTrackIncludes = (id) => {
-      alert(id);
       setAudioArr([...audioArr.map((arrItem, index) => index === id ? {...arrItem, includeInRec: !arrItem.includeInRec} : arrItem = arrItem)]);
     };
 
@@ -53,7 +52,7 @@ function AudioContainer() {
             <Recorder audioArr={audioArr} setAudioArr={setAudioArr} recordingState={recordingState} setRecordingState={setRecordingState} />
           </TabPanel>
           <TabPanel>
-            <Heading align="center" pb={13}>Upload Track</Heading>
+            <Heading align="center" pb={36}>Upload Track</Heading>
             <DragDrop setAudioArr={setAudioArr} audioArr={audioArr} />
           </TabPanel>
         </TabPanels>

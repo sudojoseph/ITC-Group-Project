@@ -37,13 +37,13 @@ function Navbar() {
         <>
             <Flex justify='space-between' align='center' fontSize='20px' pt='2rem' pb='2rem' backgroundColor='#A61C4F'>
                 
-                <Box ml='2rem'>
-                    <HStack display='flex' w='150%' justify='space-around' fontSize='20px'>
+              
+                    <HStack display='flex' w='40%' justify='space-around' fontSize='20px' ml='4rem'>
                         <Text fontSize='30px' mr='4rem' color='white'><Link to='/'>BeatHub</Link></Text>
                         <Text color='white'><Link to='/explore'>Explore</Link></Text>
                         <Text color='white'><Link to='/about'>How It Works</Link></Text>
                     </HStack>
-                </Box>
+                {/* </Box> */}
                 <HStack spacing='24px' pr='15px'>
                     <Box>
                     <Login setProfileUser={setProfileUser}/>
@@ -68,6 +68,8 @@ function Navbar() {
                     </Menu>
                 </HStack>
 
+                {/* </Box> */}
+    
             </Flex>
         </>
     )

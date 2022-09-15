@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import MediaPlayer from '../audioComponents/MediaPlayer'
 import { Box, Flex, Button, Input, InputGroup, InputRightElement, Select, Text, List, ListItem, ListIcon, OrderedList, UnorderedList } from '@chakra-ui/react'
+import axios from 'axios'
 
 function Search() {
 
@@ -12,36 +14,15 @@ function Search() {
   }])
 
   useEffect(() => {
-    const mockSongs = [
-      {
-        title: 'I Wanna Hold Your Hand',
-        genre: 'Rock',
-        length: 95,
-        creator: 'Lennon/McCartney',
-        creator_id: 1
-      },
-
-      {
-        title: 'Hit Me Baby One More Time',
-        genre: 'Pop',
-        length: 125,
-        creator: 'Britney Spears',
-        creator_id: 2
-      },
-
-      {
-        title: 'Hava Nagila',
-        genre: 'Regional',
-        length: 7521,
-        creator: 'Tzvi Ben Yaakov',
-        creator_id: 3
-      }
-    ]
-
-    setSongsList(mockSongs)
+    try {
+      const res = axios.get('http://localhost:8070/thread').then((res) => {
+        console.log(res.data.thread)
+        setSongsList(res.data.thread)
+      })
+    } catch (error) {
+      console.error(error)
+    }
   }, [])
-
-
 
 
   return (
@@ -66,22 +47,39 @@ function Search() {
             <option value='edm'>EDM</option>
             <option value='regional'>Regional</option>
           </Select>
-          <Select variant='flushed' placeholder='Length' w='100%' size='sm'>
-            <option value='short'>0 - 30s</option>
-            <option value='medium'>30s - 2min</option>
-            <option value='long'>2min --</option>
-          </Select>
         </Flex>
 
-        <Box display='flex' direction='column' mt='4rem'>
-          <List spacing={10} fontSize='1.5rem'>
+
+        <Box display='flex' direction='column' mt='4rem' >
+          <List spacing={20} fontSize='1.5rem'>
             {songs.map((song) => {
               return (
-                <div>
-                  <ListItem borderBottom='2px'>
-                  (PLAYER BUTTON HERE) {song.title} by {song.creator} - {song.length} minutes
-                  </ListItem>
-                </div>
+                <>
+                  <Flex align='center' p='2rem' direction='column' boxShadow='base' rounded='md' bg='#121214' color='white' borderRadius='10px' >
+
+                    <Flex align='left' direction='column'>
+                      <MediaPlayer src={song.audioFile} />
+                      <Flex direction='column'>
+                        <Text mt='1rem' fontSize='15px' fontWeight='bold'>{`"${song.title}"`}</Text><Text mt='0.7rem' ml='15rem' fontSize='12px'>{`${song.bpm} BPM`}</Text>
+                      </Flex>
+                    </Flex>
+
+                    <Flex justifyContent='space-around' mt='2rem'>
+                      <Select variant='flushed' placeholder='Forks' size='sm' w='50%' mr='5rem'>
+                        <option style={{ backgroundColor: 'black' }}>{song?.subThreads?.length}</option>
+                      </Select>
+                      <Button backgroundColor='#6C75F5' color='white' _hover={{ backgroundColor: '#F2F2F2', color: '#6C75F5' }} p='1.2rem' fontSize='13px' onClick={() => {
+                        songs.map((item) => {
+                          if (song._id === item._id) {
+                            console.log('O item é', item)
+                            //const resp = axios.post(`http://localhost:8070/thread/${item._id}/subthread`, item).then((res) => {})
+                          }
+                        }
+                        )
+                      }}>Fork Track</Button>
+                    </Flex>
+                  </Flex>
+                </>
               )
             })}
           </List>
