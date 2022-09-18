@@ -55,7 +55,7 @@ function Search() {
             {songs.map((song) => {
               return (
                 <>
-                  <Flex align='center' p='2rem' direction='column' boxShadow='base' rounded='md' bg='#121214' color='white' borderRadius='10px' >
+                  <Flex align='center' p='2rem' direction='column' boxShadow='4px 4px 7px 4px #5b5b5b47' rounded='md' bg='#121214' color='white' borderRadius='10px' >
 
                     <Flex align='left' direction='column'>
                       <MediaPlayer src={song.audioFile} />
